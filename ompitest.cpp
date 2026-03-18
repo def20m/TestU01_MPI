@@ -115,9 +115,6 @@ int main(int argc, char *argv[])
             MPI_Send(&randNum, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
         }
         run_master(world_size, static_cast<CRUSH_TYPE>(testType));
-
-        // std::cout << MPI_Crush_Results(static_cast<CRUSH_TYPE>(testType));
-        // std::cout << "base seed: " << seed << std::endl;
     }
     else
     {
@@ -139,10 +136,6 @@ int main(int argc, char *argv[])
         gen = unif01_CreateExternGen01(genName, genRanDbl);
 
         run_worker(world_rank, static_cast<CRUSH_TYPE>(testType), gen);
-
-        // MPI_Crush_Test(static_cast<CRUSH_TYPE>(testType), gen, world_rank);
-
-        // std::cout << "seed " << world_rank << ": " << seed << std::endl;
     }
 
     // Finalize the MPI environment.
