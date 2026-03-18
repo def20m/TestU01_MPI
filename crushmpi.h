@@ -29,37 +29,6 @@ std::string recv_string(int source, int tag, MPI_Comm comm)
     return str;
 }
 
-std::string MPI_Crush_Results(CRUSH_TYPE ct)
-{
-    int length = 0;
-    switch (ct)
-    {
-    case SMALL_CRUSH:
-        length = 11;
-        break;
-    case CRUSH:
-        length = 97;
-        break;
-    case BIG_CRUSH:
-        length = 107;
-        break;
-    default:
-        std::cout << "Rank 0: Invalid test type." << std::endl;
-        return std::string("");
-    }
-    auto start = std::chrono::high_resolution_clock::now();
-    std::string pVals = "";
-    for (int i = 1; i < length; ++i)
-    {
-        pVals += recv_string(i, 0, MPI_COMM_WORLD);
-        pVals += ",";
-    }
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration<double>(end - start);
-    pVals += std::to_string(duration.count()) + "\n";
-    return pVals;
-}
-
 void MPI_Crush_Test(CRUSH_TYPE ct, unif01_Gen *gen, int testNum)
 {
     std::string pVal = "";
